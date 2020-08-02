@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Khanh Blog Face</title>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href= "{{ url_for('static',filename='app.css') }}">
+<link rel="stylesheet" href= "../static/app.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+<div id="maintable">
+    <h1>Classifier Iris<h1>
+    <form id="sub_form" action="/predict" method="POST">
+        <label >Sepal Length:</label>
+        <input type="text" id="seq_len" name="sp_len"><br><br>
+        <label >Sepal Width:</label>
+        <input type="text" id="seq_wid" name="sp_wid"><br><br>
+        <label >Pental Length:</label>
+        <input type="text" id="pen_len" name="pen_len"><br><br>
+        <label >Pental Width:</label>
+        <input type="text" id="pen_wid" name="pen_wid"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <br/>
+    <div id='id_result' class="col" style="display:None">
+        <h1>Predict Result: </h1>
+        <div id='id_class'>Class</div>
+        <div id='id_prob'>Probability</div>
+    </div>
+</body>
+
+<script type="text/javascript">
+// var dataJson = JSON.stringify(newData);
+$('#sub_form').submit(function(e){
+    var serial_data = $(this).serializeArray();
+    var data = {};
+    for (i = 0; i < serial_data.length; i++){
+        var el = serial_data[i];
+        if (el['value'] == ""){
+            data[el['name']] = parseFloat(0);
+        } else {
+            data[el['name']] = parseFloat(el['value']);
+        }
+    };
+    console.log(data);
+    dataJson = JSON.stringify(data);
+    e.preventDefault();
+    var req = $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        dataType:"json",
+        contentType:"application/json",
+        data: dataJson,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data){
+                console.log("Submit was succesful!");
+                let div_result = document.getElementById('id_result');
+                let class_label = document.getElementById('id_class');
+                let prob = document.getElementById('id_prob');
+                div_result.style.display='table-cell';
+                class_label.innerText = "Class: " + data['label'];
+                prob.innerText = "Probability: " + 100*(data['probability'][0]) + "%";
+                console.log(data['label'], data['probability'][0]);
+            },
+        error: function(jqXHR, textStatus, errorMessage){
+            console.log('An error occurred.');
+            console.log(errorMessage);
+        }
+    })
+})
+</script>
+</html>
