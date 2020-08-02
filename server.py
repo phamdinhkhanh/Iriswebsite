@@ -53,4 +53,5 @@ if __name__ == "__main__":
   # Load model và scaler
   model = utils._load_pkl('knn.pkl')
   scaler = utils._load_pkl('scaler.pkl')
+  # app.run(debug=False, host='localhost', threaded=False)
   app.run(debug=False, host='localhost', threaded=False)
