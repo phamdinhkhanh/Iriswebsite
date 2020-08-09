@@ -7,6 +7,8 @@ import os
 
 # Khởi tạo model.
 global model 
+global scaler
+
 model = None
 # Khởi tạo flask app
 app = Flask(__name__)
@@ -16,7 +18,7 @@ app.config['UPLOAD_FOLDER'] = "static"
 @app.route("/", methods=["GET"])
 # Khai báo hàm xử lý dữ liệu.
 def _hello_world():
-#   return "Hello world"
+  # return "Hello world"
     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'placeholder.png')
     return render_template('index.html', displayedimage = full_filename)
 
