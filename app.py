@@ -1,3 +1,5 @@
+# -*-coding: utf-8 -*-
+
 import numpy as np
 from flask import Flask, request, render_template
 import flask
@@ -5,9 +7,11 @@ import json
 import utils
 import os
 
-# # Khởi tạo model.
-# global model 
-# model = None
+# Khởi tạo model
+global model 
+global scaler
+model = None
+
 # Khởi tạo flask app
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = "static"
@@ -16,7 +20,9 @@ app.config['UPLOAD_FOLDER'] = "static"
 @app.route("/", methods=["GET"])
 # Khai báo hàm xử lý dữ liệu.
 def _hello_world():
-    return render_template('index.html')
+  # return "Hello world"
+  full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'placeholder.png')
+  return render_template('index.html', displayedimage = full_filename)
 
 # Khai báo các route 2 cho API
 @app.route("/predict", methods=["POST"])
