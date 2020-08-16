@@ -6,12 +6,15 @@
 <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href= "{{ url_for('static',filename='app.css') }}">
 <link rel="stylesheet" href= "../static/app.css">
+<link rel="stylesheet" href= "/static/app.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
-
 <body>
 <div id="maintable">
-    <h1>Classifier Iris<h1>
+    <h2>Thực hành Project cuối khóa<h2>
+	<h2>Demo model machine learning<h2>
+	<br/>
+	<h2>Classifier Iris<h2>
     <form id="sub_form" action="/predict" method="POST">
         <label >Sepal Length:</label>
         <input type="text" id="seq_len" name="sp_len"><br><br>
@@ -24,7 +27,7 @@
         <input type="submit" value="Submit">
     </form>
     <br/>
-    <div id='id_result' class="col" style="display:None">
+    <div id='id_result' class="col" style="display:None" text-align="center">
         <h1>Predict Result: </h1>
         <div id='id_class'>Class</div>
         <div id='id_prob'>Probability</div>

@@ -5,9 +5,9 @@ import json
 import utils
 import os
 
-# Khởi tạo model.
-global model 
-model = None
+# # Khởi tạo model.
+# global model 
+# model = None
 # Khởi tạo flask app
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = "static"
@@ -16,9 +16,7 @@ app.config['UPLOAD_FOLDER'] = "static"
 @app.route("/", methods=["GET"])
 # Khai báo hàm xử lý dữ liệu.
 def _hello_world():
-#   return "Hello world"
-    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'placeholder.png')
-    return render_template('index.html', displayedimage = full_filename)
+    return render_template('index.html')
 
 # Khai báo các route 2 cho API
 @app.route("/predict", methods=["POST"])
@@ -39,9 +37,11 @@ def _predict():
     # Convert sang numpy array input
     X_input = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
     # Dự báo nhãn và xác suất.
-    label = model.predict(X_input)
+    # label = model.predict(X_input)
+    label = [1]
     # Dự báo phân phối xác suất
-    dist_probs = model.predict_proba(X_input)
+    # dist_probs = model.predict_proba(X_input)
+    dist_probs = np.array([[0.05, 0.9, 0.05]])
     # Truyền vào data form response
     data["probability"] = dist_probs[0][label]
     data["label"] = labels[label[0]]
@@ -51,7 +51,7 @@ def _predict():
 if __name__ == "__main__":
   print("App run!")
   # Load model và scaler
-  model = utils._load_pkl('knn.pkl')
-  scaler = utils._load_pkl('scaler.pkl')
+  # model = utils._load_pkl('knn.pkl')
+  # scaler = utils._load_pkl('scaler.pkl')
   # app.run(debug=False, host='localhost', threaded=False)
   app.run(debug=False, threaded=False)
