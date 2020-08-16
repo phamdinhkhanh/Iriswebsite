@@ -42,6 +42,9 @@ def _predict():
     petal_width = request_body['pen_wid']
     # Convert sang numpy array input
     X_input = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
+    # Load model and scaler
+    model = utils._load_pkl('knn.pkl')
+    scaler = utils._load_pkl('scaler.pkl')
     # Standardize data
     X_std = scaler.transform(X_input)
     # Dự báo nhãn và xác suất.
@@ -57,7 +60,5 @@ def _predict():
 if __name__ == "__main__":
   print("App run!")
   # Load model và scaler
-  model = utils._load_pkl('knn.pkl')
-  scaler = utils._load_pkl('scaler.pkl')
   # app.run(debug=False, host='localhost', threaded=False)
   app.run(debug=False, threaded=False)
