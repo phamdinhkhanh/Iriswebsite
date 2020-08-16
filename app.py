@@ -42,12 +42,12 @@ def _predict():
     petal_width = request_body['pen_wid']
     # Convert sang numpy array input
     X_input = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
+    # Standardize data
+    X_std = scaler.transform(X_input)
     # Dự báo nhãn và xác suất.
-    # label = model.predict(X_input)
-    label = [1]
+    label = model.predict(X_std)
     # Dự báo phân phối xác suất
-    # dist_probs = model.predict_proba(X_input)
-    dist_probs = np.array([[0.05, 0.9, 0.05]])
+    dist_probs = model.predict_proba(X_std)
     # Truyền vào data form response
     data["probability"] = dist_probs[0][label]
     data["label"] = labels[label[0]]
@@ -57,7 +57,7 @@ def _predict():
 if __name__ == "__main__":
   print("App run!")
   # Load model và scaler
-  # model = utils._load_pkl('knn.pkl')
-  # scaler = utils._load_pkl('scaler.pkl')
+  model = utils._load_pkl('knn.pkl')
+  scaler = utils._load_pkl('scaler.pkl')
   # app.run(debug=False, host='localhost', threaded=False)
   app.run(debug=False, threaded=False)
