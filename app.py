@@ -11,7 +11,7 @@ import os
 global model 
 global scaler
 model = None
-
+scaler= None
 # Khởi tạo flask app
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = "static"
