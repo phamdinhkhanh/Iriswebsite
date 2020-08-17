@@ -9,9 +9,9 @@ import os
 
 # Khởi tạo model
 global model 
-global scaler
+# global scaler
 model = None
-scaler= None
+# scaler= None
 # Khởi tạo flask app
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = "static"
@@ -43,14 +43,14 @@ def _predict():
     # Convert sang numpy array input
     X_input = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
     # Load model and scaler
-    model = utils._load_pkl('knn.pkl')
-    scaler = utils._load_pkl('scaler.pkl')
+    model = utils._load_pkl('knn_no_scale.pkl')
+    # scaler = utils._load_pkl('scaler.pkl')
     # Standardize data
-    X_std = scaler.transform(X_input)
+    # X_std = scaler.transform(X_input)
     # Dự báo nhãn và xác suất.
-    label = model.predict(X_std)
+    label = model.predict(X_input)
     # Dự báo phân phối xác suất
-    dist_probs = model.predict_proba(X_std)
+    dist_probs = model.predict_proba(X_input)
     # Truyền vào data form response
     data["probability"] = dist_probs[0][label]
     data["label"] = labels[label[0]]

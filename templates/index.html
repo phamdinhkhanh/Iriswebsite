@@ -66,7 +66,7 @@ $('#sub_form').submit(function(e){
                 let prob = document.getElementById('id_prob');
                 div_result.style.display='table-cell';
                 class_label.innerText = "Class: " + data['label'];
-                prob.innerText = "Probability: " + 100*(data['probability'][0]) + "%";
+                prob.innerText = "Probability: " + (Math.round(data['probability'][0]*10000))/100 + "%";
                 console.log(data['label'], data['probability'][0]);
             },
         error: function(jqXHR, textStatus, errorMessage){
